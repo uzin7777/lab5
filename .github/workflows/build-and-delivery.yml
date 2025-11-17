@@ -6,6 +6,7 @@ on:
       - completed
     branches:
       - main
+
 jobs:
   cd:
     runs-on: ubuntu-latest
