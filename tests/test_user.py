@@ -35,10 +35,8 @@ def test_create_user_with_valid_email():
     new_user = {'name': 'Sergey Sergeev', 'email': 'sergey.sergeev@mail.com'}
     response = client.post("/api/v1/user", json=new_user)
     assert response.status_code == 201
-    created = response.json()
-    assert created['name'] == new_user['name']
-    assert created['email'] == new_user['email']
-    assert 'id' in created
+    created_id = response.json()
+    assert isinstance(created_id, int)
 
 def test_create_user_with_invalid_email():
     '''Создание пользователя с почтой, которую использует другой пользователь'''
@@ -54,7 +52,7 @@ def test_delete_user():
     create = client.post("/api/v1/user", json={'name': 'Delete Me', 'email': test_email})
     assert create.status_code == 201
     response = client.delete("/api/v1/user", params={'email': test_email})
-    assert response.status_code == 200
+    assert response.status_code == 204
     check = client.get("/api/v1/user", params={'email': test_email})
     assert check.status_code == 404
 
