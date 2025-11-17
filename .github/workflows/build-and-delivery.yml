@@ -1,8 +1,11 @@
 name: Build and Delivery
-on:
-  push:
+on: 
+  workflow_run:
+    workflows: ["Test Python App"]
+    types:
+       - completed
     branches:
-      - main
+       - main
 jobs:
   cd:
     runs-on: ubuntu-latest
